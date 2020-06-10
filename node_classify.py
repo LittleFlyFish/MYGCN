@@ -52,6 +52,13 @@ def main():
         print('EPOCH', epoch+1, 'Loss', loss.item())
 
     # model test
+    my_net.eval()
+    _, prediction = my_net(data).max(dim=1)
+    target = data.y
+    test_correct = prediction[data.test_mask].eq(target[data.test_mask]).sum().item()
+    test_number = data.test_mask.sum().item()
+
+    print('Accuracy of Test Samples:', test_correct/test_number)
     # my_net.eval()
 
 if __name__ == '__main__':
