@@ -26,6 +26,7 @@ class YourGCN(nn.Module):
         # data.x data.edge_index
         x = data.x # [N, C]
         edge_index = data.edge_index # [2, E]
+        print(data.Adjacency)
         hid = self.conv1(x=x, edge_index=edge_index) # [N, D]
         hid = F.relu(hid)
 
