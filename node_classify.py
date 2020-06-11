@@ -74,7 +74,7 @@ def main():
     my_net = my_net.to(device)
     data = cora_dataset[0].to(device)
 
-    optimizer = torch.optim.Adam(my_net.parameters(), lr=1e-3)
+    optimizer = torch.optim.Adam(my_net.parameters(), lr=1e-5)
 
     # model train
     my_net.train()
