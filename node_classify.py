@@ -16,8 +16,8 @@ def get_data(folder='node_classify/cora', data_name='cora'):
 class YourGCN(nn.Module):
     def __init__(self, in_c, hid_c, out_c):
         super(YourGCN, self).__init__()
-        self.conv1 = pyg_nn.FeaStConv(in_channels=in_c, out_channels=hid_c)
-        self.conv2 = pyg_nn.FeaStConv(in_channels=hid_c, out_channels=out_c)
+        self.conv1 = pyg_nn.HypergraphConv(in_channels=in_c, out_channels=hid_c)
+        self.conv2 = pyg_nn.HypergraphConv(in_channels=hid_c, out_channels=out_c)
         self.conv3 = pyg_nn.SGConv(in_channels=out_c, out_channels=out_c)
         self.conv4 = pyg_nn.GCNConv(in_channels=out_c, out_channels=out_c)
         self.conv5 = pyg_nn.GCNConv(in_channels=out_c, out_channels=out_c)
@@ -40,7 +40,7 @@ class YourGCN(nn.Module):
         #
         # out3 = self.conv5(x=out2, edge_index=edge_index)  # [N, out_c]
 
-        out = F.log_softmax(torch.cat(out, hid), dim=1) # [N, out_c]
+        out = F.log_softmax(out, dim=1) # [N, out_c]
 
         return out
 
@@ -78,7 +78,7 @@ def main():
 
     # model train
     my_net.train()
-    for epoch in range(200):
+    for epoch in range(300):
         optimizer.zero_grad()
 
         output = my_net(data)
