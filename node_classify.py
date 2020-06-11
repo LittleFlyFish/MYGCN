@@ -43,7 +43,7 @@ class YourGCN(nn.Module):
 
         out3 = F.log_softmax(out3, dim=1) # [N, out_c]
 
-        return out
+        return out3
 
 
 class GraphCNN(nn.Module):
