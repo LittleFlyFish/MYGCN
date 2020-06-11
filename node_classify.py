@@ -11,6 +11,41 @@ def get_data(folder='node_classify/cora', data_name='cora'):
     return dataset
 
 # create the graph cnn model
+
+# To do list
+class YourGCN(nn.Module):
+    def __init__(self, in_c, hid_c, out_c):
+        super(YourGCN, self).__init__()
+        self.conv1 = pyg_nn.GCNConv(in_channels=in_c, out_channels=hid_c)
+        self.conv2 = pyg_nn.GCNConv(in_channels=hid_c, out_channels=out_c)
+        self.conv3 = pyg_nn.GCNConv(in_channels=out_c, out_channels=out_c)
+        self.conv4 = pyg_nn.GCNConv(in_channels=out_c, out_channels=out_c)
+        self.conv5 = pyg_nn.GCNConv(in_channels=out_c, out_channels=out_c)
+
+    def forward(self, data):
+        # data.x data.edge_index
+        x = data.x # [N, C]
+        edge_index = data.edge_index # [2, E]
+        hid = self.conv1(x=x, edge_index=edge_index) # [N, D]
+        hid = F.relu(hid)
+
+        out = self.conv2(x=hid, edge_index=edge_index) # [N, out_c]
+        out = F.relu(out)
+
+        out1 = self.conv3(x=out, edge_index=edge_index) # [N, out_c]
+        out1 = F.relu(out1)
+
+        out2 = self.conv4(x=out1, edge_index=edge_index)  # [N, out_c]
+        out2 = F.relu(out2)
+
+        out3 = self.conv5(x=out2, edge_index=edge_index)  # [N, out_c]
+        out3 = F.relu(out3)
+
+        out3 = F.log_softmax(out3, dim=1) # [N, out_c]
+
+        return out
+
+
 class GraphCNN(nn.Module):
     def __init__(self, in_c, hid_c, out_c):
         super(GraphCNN, self).__init__()
@@ -32,7 +67,10 @@ class GraphCNN(nn.Module):
 def main():
     os.environ['CUDA_VISIBLE_DEVICES'] = '5'
     cora_dataset = get_data()
-    my_net = GraphCNN(in_c=cora_dataset.num_node_features, hid_c=12, out_c=cora_dataset.num_classes)
+
+    # todo list
+
+    my_net = YourGCN(in_c=cora_dataset.num_node_features, hid_c=12, out_c=cora_dataset.num_classes)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     my_net = my_net.to(device)
     data = cora_dataset[0].to(device)
