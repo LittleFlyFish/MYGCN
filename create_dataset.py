@@ -33,7 +33,7 @@ class PyGToyDataset(InMemoryDataset):
         # 100 samples, each sample is a graph with 32 nodes and 42 edges, each node has a feature dimension of 3.
         data_list = [toy_dataset(num_nodes=32, num_node_features=3, num_edges=42) for _ in range(100)]
         data_save, data_slices = self.collate(data_list)
-        torch.save((data_save, data_slices), self.processed_file_names[])
+        torch.save((data_save, data_slices), self.processed_file_names[0])
 
 if __name__ == '__main__':
     # toy_sample = toy_dataset(num_nodes=32, num_node_features=3, num_edges=42)
