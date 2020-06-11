@@ -40,7 +40,7 @@ class YourGCN(nn.Module):
         #
         # out3 = self.conv5(x=out2, edge_index=edge_index)  # [N, out_c]
 
-        out = F.log_softmax(out, dim=1) # [N, out_c]
+        out = F.log_softmax(torch.cat(out, hid), dim=1) # [N, out_c]
 
         return out
 
