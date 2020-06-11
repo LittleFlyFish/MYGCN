@@ -16,8 +16,8 @@ def get_data(folder='node_classify/cora', data_name='cora'):
 class YourGCN(nn.Module):
     def __init__(self, in_c, hid_c, out_c):
         super(YourGCN, self).__init__()
-        self.conv1 = pyg_nn.GMMConv(in_channels=in_c, out_channels=hid_c, kernel_size=10, dim=5)
-        self.conv2 = pyg_nn.GMMConv(in_channels=hid_c, out_channels=out_c, kernel_size=10, dim=5)
+        self.conv1 = pyg_nn.FeaStConv(in_channels=in_c, out_channels=hid_c)
+        self.conv2 = pyg_nn.FeaStConv(in_channels=hid_c, out_channels=out_c)
         self.conv3 = pyg_nn.SGConv(in_channels=out_c, out_channels=out_c)
         self.conv4 = pyg_nn.GCNConv(in_channels=out_c, out_channels=out_c)
         self.conv5 = pyg_nn.GCNConv(in_channels=out_c, out_channels=out_c)
