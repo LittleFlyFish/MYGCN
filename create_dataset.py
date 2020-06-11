@@ -3,6 +3,7 @@ import torch
 import torch_geometric
 from torch_geometric.data import InMemoryDataset
 from torch_geometric.data import Data
+from torch_geometric.data import DataLoader
 
 # create a toy dataset
 def toy_dataset(num_nodes, num_node_features, num_edges):
@@ -41,3 +42,7 @@ if __name__ == '__main__':
     # print(toy_sample)
     toy_data = PyGToyDataset(save_root='toy')  # 100 samples, each sample is a graph.
     print(toy_data[0])
+    data_loader = DataLoader(toy_data, batch_size=5, shuffle=True)
+
+    for batch in data_loader:
+        print(batch)
