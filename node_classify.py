@@ -39,7 +39,6 @@ class YourGCN(nn.Module):
         out2 = F.relu(out2)
 
         out3 = self.conv5(x=out2, edge_index=edge_index)  # [N, out_c]
-        out3 = F.relu(out3)
 
         out3 = F.log_softmax(out3, dim=1) # [N, out_c]
 
