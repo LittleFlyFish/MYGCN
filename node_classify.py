@@ -16,8 +16,8 @@ def get_data(folder='node_classify/cora', data_name='cora'):
 class YourGCN(nn.Module):
     def __init__(self, in_c, hid_c, out_c):
         super(YourGCN, self).__init__()
-        self.conv1 = pyg_nn.GATConv(in_channels=in_c, out_channels=hid_c)
-        self.conv2 = pyg_nn.GATConv(in_channels=hid_c, out_channels=out_c)
+        self.conv1 = pyg_nn.GCNConv(in_channels=in_c, out_channels=hid_c)
+        self.conv2 = pyg_nn.GCNConv(in_channels=hid_c, out_channels=out_c)
         self.conv3 = pyg_nn.GCNConv(in_channels=out_c, out_channels=out_c)
         self.conv4 = pyg_nn.GCNConv(in_channels=out_c, out_channels=out_c)
         self.conv5 = pyg_nn.GCNConv(in_channels=out_c, out_channels=out_c)
@@ -30,9 +30,9 @@ class YourGCN(nn.Module):
         hid = F.relu(hid)
 
         out = self.conv2(x=hid, edge_index=edge_index) # [N, out_c]
-        out = F.relu(out)
-
-        out1 = self.conv3(x=out, edge_index=edge_index) # [N, out_c]
+        # out = F.relu(out)
+        #
+        # out1 = self.conv3(x=out, edge_index=edge_index) # [N, out_c]
         # out1 = F.relu(out1)
         #
         # out2 = self.conv4(x=out1, edge_index=edge_index)  # [N, out_c]
@@ -40,9 +40,9 @@ class YourGCN(nn.Module):
         #
         # out3 = self.conv5(x=out2, edge_index=edge_index)  # [N, out_c]
 
-        out1 = F.log_softmax(out1, dim=1) # [N, out_c]
+        out = F.log_softmax(out, dim=1) # [N, out_c]
 
-        return out1
+        return out
 
 
 class GraphCNN(nn.Module):
