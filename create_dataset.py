@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 import torch_geometric
 from torch_geometric.data import InMemoryDataset
 from torch_geometric.data import Data
