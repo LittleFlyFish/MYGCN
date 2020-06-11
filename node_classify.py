@@ -69,7 +69,7 @@ def main():
 
     # todo list
 
-    my_net = YourGCN(in_c=cora_dataset.num_node_features, hid_c=100, out_c=cora_dataset.num_classes)
+    my_net = YourGCN(in_c=cora_dataset.num_node_features, hid_c=48, out_c=cora_dataset.num_classes)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     my_net = my_net.to(device)
     data = cora_dataset[0].to(device)
