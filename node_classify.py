@@ -30,9 +30,9 @@ class YourGCN(nn.Module):
         hid = F.relu(hid)
 
         out = self.conv2(x=hid, edge_index=edge_index) # [N, out_c]
-        # out = F.relu(out)
-        #
-        # out1 = self.conv3(x=out, edge_index=edge_index) # [N, out_c]
+        out = F.relu(out)
+
+        out1 = self.conv3(x=out, edge_index=edge_index) # [N, out_c]
         # out1 = F.relu(out1)
         #
         # out2 = self.conv4(x=out1, edge_index=edge_index)  # [N, out_c]
@@ -40,9 +40,9 @@ class YourGCN(nn.Module):
         #
         # out3 = self.conv5(x=out2, edge_index=edge_index)  # [N, out_c]
 
-        out = F.log_softmax(out, dim=1) # [N, out_c]
+        out1 = F.log_softmax(out1, dim=1) # [N, out_c]
 
-        return out
+        return out1
 
 
 class GraphCNN(nn.Module):
