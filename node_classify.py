@@ -78,7 +78,7 @@ def main():
 
     # model train
     my_net.train()
-    for epoch in range(200):
+    for epoch in range(100):
         optimizer.zero_grad()
 
         output = my_net(data)
