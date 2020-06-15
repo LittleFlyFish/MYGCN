@@ -29,16 +29,16 @@ class YourGCN(nn.Module):
         # print(data.adj)
         hid = self.conv1(x=x, edge_index=edge_index) # [N, D]
         hid = F.relu(hid)
-        hid = F.dropout(hid, p=0.2, training=self.training)
+        hid = F.dropout(hid, p=0.5, training=self.training)
 
         out = self.conv2(x=hid, edge_index=edge_index) # [N, out_c]
         out = F.relu(out)
-        out = F.dropout(out, p=0.2, training=self.training)
+        out = F.dropout(out, p=0.5, training=self.training)
 
         #
         out1 = self.conv3(x=out, edge_index=edge_index) # [N, out_c]
         out1 = F.relu(out1)
-        out1 = F.dropout(out1, p=0.2, training=self.training)
+        out1 = F.dropout(out1, p=0.5, training=self.training)
 
         #
         # out2 = self.conv4(x=out1, edge_index=edge_index)  # [N, out_c]
