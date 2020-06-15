@@ -26,24 +26,29 @@ class YourGCN(nn.Module):
         # data.x data.edge_index
         x = data.x # [N, C]
         edge_index = data.edge_index # [2, E]
-        print(data.adj)
+        # print(data.adj)
         hid = self.conv1(x=x, edge_index=edge_index) # [N, D]
         hid = F.relu(hid)
+        hid = F.dropout(hid, p=0.1, training=self.training)
 
         out = self.conv2(x=hid, edge_index=edge_index) # [N, out_c]
-        # out = F.relu(out)
+        out = F.relu(out)
+        out = F.dropout(out, p=0.1, training=self.training)
+
         #
-        # out1 = self.conv3(x=out, edge_index=edge_index) # [N, out_c]
-        # out1 = F.relu(out1)
+        out1 = self.conv3(x=out, edge_index=edge_index) # [N, out_c]
+        out1 = F.relu(out1)
+        out1 = F.dropout(out1, p=0.1, training=self.training)
+
         #
         # out2 = self.conv4(x=out1, edge_index=edge_index)  # [N, out_c]
         # out2 = F.relu(out2)
         #
         # out3 = self.conv5(x=out2, edge_index=edge_index)  # [N, out_c]
 
-        out = F.log_softmax(out, dim=1) # [N, out_c]
+        out1 = F.log_softmax(out1, dim=1) # [N, out_c]
 
-        return out
+        return out1
 
 
 class GraphCNN(nn.Module):
